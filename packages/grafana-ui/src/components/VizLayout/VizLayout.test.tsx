@@ -130,14 +130,14 @@ describe('VizLayout', () => {
       expect(scrollBox).not.toHaveStyle({ height: '100%' });
     });
 
-    it('does not call children before the legend height is measured', () => {
+    it('calls children with full height when the legend has no height (e.g. renders nothing)', () => {
       const children = jest.fn().mockReturnValue(null);
       render(
         <VizLayout width={800} height={600} legend={legend}>
           {children}
         </VizLayout>
       );
-      expect(children).not.toHaveBeenCalled();
+      expect(children).toHaveBeenCalledWith(800, 600);
     });
 
     it('calls children with reduced height once legend is measured', () => {
