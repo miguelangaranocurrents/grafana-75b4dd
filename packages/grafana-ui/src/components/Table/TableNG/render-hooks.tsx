@@ -45,7 +45,7 @@ import { HeaderCell } from './components/HeaderCell';
 import { SummaryCell } from './components/SummaryCell';
 import { TableCellActions } from './components/TableCellActions';
 import { TableCellTooltip } from './components/TableCellTooltip';
-import { CELL_HORIZONTAL_CHROME, OVERFLOW_CELL_CLASS, TABLE } from './constants';
+import { CELL_HORIZONTAL_CHROME, OVERFLOW_CELL_CLASS } from './constants';
 import {
   getCellActionStyles,
   getDefaultCellStyles,
@@ -434,8 +434,7 @@ function buildColumnsFromFields(
       const formattedValue = shouldOverflow ? formattedValueToString(field.display!(value)) : '';
       let measuredWidth = textWidthCache.get(formattedValue);
       if (measuredWidth == null && formattedValue !== '') {
-        // per-cell, so use the cheap canvas measurement; `measureWidth` is only meant for header labels
-        measuredWidth = typographyCtx.ctx.measureText(formattedValue.slice(0, TABLE.MAX_WRAP_TEXT_LENGTH)).width;
+        measuredWidth = typographyCtx.measureWidth(formattedValue);
         textWidthCache.set(formattedValue, measuredWidth);
       }
       const hasOverflow =
